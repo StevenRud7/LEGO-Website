@@ -35,7 +35,7 @@ const legosets = require('./public/data/legodataset.json')
 const mongoose = require( 'mongoose' );
 // const mongodb_URI = 'mongodb://localhost:27017/cs103a_todo'
 
-mongoose.connect( mongodb_URI, { useNewUrlParser: true, useUnifiedTopology: true } );
+//mongoose.connect( mongodb_URI, { useNewUrlParser: true, useUnifiedTopology: true } );
 // fix deprecation warnings
 mongoose.set('useFindAndModify', false); 
 mongoose.set('useCreateIndex', true);
@@ -210,14 +210,11 @@ app.post('/sets/byTheme',
     const {theme} = req.body;
     const sets = await LEGO.find({Tags:{$regex: theme}}).sort({Name:1})
     //const sets = await LEGO.find({Name:name})
-    //const sets = 0
     res.locals.sets = sets
     //console.log(sets)
     res.render('setlist')
   }
 )
-
-
 
 // here we catch 404 errors and forward to error handler
 app.use(function(req, res, next) {
