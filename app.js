@@ -198,7 +198,18 @@ app.get('/upsertDB',
 app.post('/sets/byName', 
   async (req,res,next) => {
     const {name} = req.body;
-    const sets = await LEGO.find({Name:{$regex: name}})
+    const sets = await LEGO.find({Name:{$regex: name}}).sort({Name:1})
+    //const sets = await LEGO.find({Name:name})
+    res.locals.sets = sets
+    //console.log(sets)
+    res.render('setlist')
+  }
+)
+
+app.post('/sets/byTheme', 
+  async (req,res,next) => {
+    const {theme} = req.body;
+    const sets = await LEGO.find({Tags:{$regex: theme}}).sort({Name:1})
     //const sets = await LEGO.find({Name:name})
     //const sets = 0
     res.locals.sets = sets

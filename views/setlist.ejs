@@ -22,16 +22,29 @@ All sets matching the given filter
         </td>
 
         <td>
-            <%=set['Release_Year'] %>
+            <% if (set['Release_Year'] >1963) { %>
+                <p> <%=set['Release_Year']%> </p>
+                <%} else { %>
+                <p> N/A </p>
+            <% } %>
+            
         </td>
 
         <td>
-            <%= set['Price'] %>
+            <% if (set['Price'] >0) { %>
+                <p> <%=set['Price']%> </p>
+                <%} else { %>
+                <p> N/A </p>
+            <% } %>
         </td>
         
 
         <td>
-          <%= set['Pieces'] %>
+            <% if (set['Pieces'] >0) { %>
+                <p> <%=set['Pieces']%> </p>
+                <%} else { %>
+                <p> N/A </p>
+            <% } %>
         </td>
         <td>
             <img src = "<%= set.Image%>" width = "30%" class="fit-picture">
