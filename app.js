@@ -34,7 +34,6 @@ const legosets = require('./public/data/legodataset.json')
 
 const mongoose = require( 'mongoose' );
 // const mongodb_URI = 'mongodb://localhost:27017/cs103a_todo'
-const mongodb_URI = 'mongodb+srv://cs_sj:BrandeisSpr22@cluster0.kgugl.mongodb.net/StevenData?retryWrites=true&w=majority'
 
 mongoose.connect( mongodb_URI, { useNewUrlParser: true, useUnifiedTopology: true } );
 // fix deprecation warnings
@@ -217,6 +216,7 @@ app.post('/sets/byTheme',
     res.render('setlist')
   }
 )
+
 
 
 // here we catch 404 errors and forward to error handler
