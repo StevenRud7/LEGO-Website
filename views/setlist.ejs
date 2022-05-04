@@ -1,0 +1,42 @@
+<h1>The sets are</h1>
+All sets matching the given filter
+<hr>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Set Number</th>
+            <th>Name</th>
+            <th>Release Year</th>
+            <th>Price</th>
+            <th>Pieces</th>
+            <th>Image</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+    <% for (set of sets) { %>
+      <tr class="mb-2"> 
+        <td><%= set['Set_Number'] %></td>
+
+        <td>
+            <strong><%= set['Name'] %></strong>
+        </td>
+
+        <td>
+            <%=set['Release_Year'] %>
+        </td>
+
+        <td>
+            <%= set['Price'] %>
+        </td>
+        
+
+        <td>
+          <%= set['Pieces'] %>
+        </td>
+        <td>
+            <img src = "<%= set.Image%>" width = "30%" class="fit-picture">
+        </td>
+    </tr>
+    <% } %>
+    </tbody>
+</table>

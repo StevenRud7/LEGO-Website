@@ -1,0 +1,22 @@
+
+
+    <div class="jumbotron">
+        <h1>CPA03: LEGO Set Finder </h1>
+        <p></p>
+    </div>
+
+    <p class="p-3 m-3 border border-danger bg-light">
+        The goal of this website is to search through a data base of lego sets and find and observe any one that is searched for.
+    </p>
+    
+    <% if (true || loggedIn) {%>  
+        <form method="post" action="/sets/byName">
+            Show Lego Sets by Name: 
+              <input type="text" name="name" 
+                     placeholder="e.g. Batman">
+            <input type="submit">
+        </form>
+    <% } %>
+
+
+
