@@ -6,7 +6,7 @@
     </div>
 
     <p class="p-3 m-3 border border-danger bg-light">
-        The goal of this website is to search through a data base of lego sets and find and observe any one that is searched for.
+        The goal of this website is to search through a data base of lego sets from 1964 - 2021 and find and observe any one that is searched for.
     </p>
     
     <% if (true || loggedIn) {%>  
@@ -24,6 +24,14 @@
             <input type="submit">
         </form>
         <br>
+        <form method="post" action="/sets/byYear">
+            Show Lego Sets by Year: 
+              <input type="text" name="year" 
+                     placeholder="e.g. 2017">
+            <input type="submit">
+        </form>
+        <br>
+        <a href="/wishlist/show">Show Wishlist</a>
     <% } %>
 
 

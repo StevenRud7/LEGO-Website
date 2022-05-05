@@ -20,6 +20,8 @@ const axios = require("axios")
 // *********************************************************** //
 const ToDoItem = require("./models/ToDoItem")
 const LEGO = require('./models/LEGO')
+const WishList = require('./models/WishList')
+
 
 // *********************************************************** //
 //  Loading JSON datasets
@@ -34,8 +36,10 @@ const legosets = require('./public/data/legodataset.json')
 
 const mongoose = require( 'mongoose' );
 // const mongodb_URI = 'mongodb://localhost:27017/cs103a_todo'
+const mongodb_URI = 'mongodb+srv://CPA02:zW5UGuUKhIumIfm0@cluster1.lyciq.mongodb.net/StevenData?retryWrites=true&w=majority'
 
-//mongoose.connect( mongodb_URI, { useNewUrlParser: true, useUnifiedTopology: true } );
+
+mongoose.connect( mongodb_URI, { useNewUrlParser: true, useUnifiedTopology: true } );
 // fix deprecation warnings
 mongoose.set('useFindAndModify', false); 
 mongoose.set('useCreateIndex', true);
@@ -117,7 +121,7 @@ app.get("/about", (req, res, next) => {
 /*
     ToDoList routes
 */
-app.get('/todo', // MAYBE MAKE IT A WISH LIST INSTEAD OF A TO DO FOR THIS
+app.get('/todo', 
   isLoggedIn,   // redirect to /login if user is not logged in
   async (req,res,next) => {
     try{
@@ -213,6 +217,79 @@ app.post('/sets/byTheme',
     res.locals.sets = sets
     //console.log(sets)
     res.render('setlist')
+  }
+)
+
+app.post('/sets/byYear', 
+  async (req,res,next) => {
+    const {year} = req.body;
+    //const sets = await LEGO.find({Tags:{$regex: theme}}).sort({Name:1})
+    const sets = await LEGO.find({Release_Year:year}).sort({Name:1})
+    res.locals.sets = sets
+    //console.log(sets)
+    res.render('setlist')
+  }
+)
+
+app.get('/sets/show/:setID',
+  // show all info about a course given its courseid
+  async (req,res,next) => {
+    const {setID} = req.params;
+    const set = await LEGO.findOne({_id:setID})
+    res.locals.set = set
+    res.render('oneSet')
+  }
+)
+
+app.use(isLoggedIn)
+
+app.get('/addSet/:setID',
+  // add a course to the user's schedule
+  async (req,res,next) => {
+    try {
+      const setID = req.params.setID
+      const userId = res.locals.user._id
+      // check to make sure it's not already loaded
+      const lookup = await WishList.find({setID,userId})
+      if (lookup.length==0){
+        const wishlist = new WishList({setID,userId})
+        await wishlist.save()
+      }
+      res.redirect('/wishlist/show')
+    } catch(e){
+      next(e)
+    }
+  })
+
+app.get('/wishlist/show',
+  // show the current user's schedule
+  async (req,res,next) => {
+    try{
+      const userId = res.locals.user._id;
+      const setIDs = 
+         (await WishList.find({userId}))
+                        .sort(x => x.Name)
+                        .map(x => x.setID)
+      res.locals.sets = await LEGO.find({_id:{$in: setIDs}})
+      res.render('wishlist')
+    } catch(e){
+      next(e)
+    }
+  }
+)
+
+app.get('/wishlist/remove/:setID',
+  // remove a course from the user's schedule
+  async (req,res,next) => {
+    try {
+      await WishList.remove(
+                {userId:res.locals.user._id,
+                 setID:req.params.setID})
+      res.redirect('/wishlist/show')
+
+    } catch(e){
+      next(e)
+    }
   }
 )
 

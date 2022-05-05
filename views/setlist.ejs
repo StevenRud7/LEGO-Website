@@ -15,8 +15,11 @@ All sets matching the given filter
     <tbody></tbody>
     <% for (set of sets) { %>
       <tr class="mb-2"> 
-        <td><%= set['Set_Number'] %></td>
-
+        <td>
+            <a href="/sets/show/<%=set._id %>">
+            <strong><%= set['Set_Number'] %></strong>
+            </a>
+        </td>
         <td>
             <strong><%= set['Name'] %></strong>
         </td>
