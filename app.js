@@ -21,6 +21,7 @@ const axios = require("axios")
 const ToDoItem = require("./models/ToDoItem")
 const LEGO = require('./models/LEGO')
 const WishList = require('./models/WishList')
+const OwnedList = require('./models/OwnedList')
 
 
 // *********************************************************** //
@@ -34,10 +35,10 @@ const legosets = require('./public/data/legodataset.json')
 //  Connecting to the database
 // *********************************************************** //
 
+
 const mongoose = require( 'mongoose' );
 // const mongodb_URI = 'mongodb://localhost:27017/cs103a_todo'
 const mongodb_URI = 'mongodb+srv://CPA02:zW5UGuUKhIumIfm0@cluster1.lyciq.mongodb.net/StevenData?retryWrites=true&w=majority'
-
 
 mongoose.connect( mongodb_URI, { useNewUrlParser: true, useUnifiedTopology: true } );
 // fix deprecation warnings
@@ -232,7 +233,6 @@ app.post('/sets/byYear',
 )
 
 app.get('/sets/show/:setID',
-  // show all info about a course given its courseid
   async (req,res,next) => {
     const {setID} = req.params;
     const set = await LEGO.findOne({_id:setID})
@@ -244,7 +244,6 @@ app.get('/sets/show/:setID',
 app.use(isLoggedIn)
 
 app.get('/addSet/:setID',
-  // add a course to the user's schedule
   async (req,res,next) => {
     try {
       const setID = req.params.setID
@@ -262,7 +261,6 @@ app.get('/addSet/:setID',
   })
 
 app.get('/wishlist/show',
-  // show the current user's schedule
   async (req,res,next) => {
     try{
       const userId = res.locals.user._id;
@@ -279,13 +277,59 @@ app.get('/wishlist/show',
 )
 
 app.get('/wishlist/remove/:setID',
-  // remove a course from the user's schedule
   async (req,res,next) => {
     try {
       await WishList.remove(
                 {userId:res.locals.user._id,
                  setID:req.params.setID})
       res.redirect('/wishlist/show')
+
+    } catch(e){
+      next(e)
+    }
+  }
+)
+
+app.get('/addOwnedSet/:setID',
+  async (req,res,next) => {
+    try {
+      const setID = req.params.setID
+      const userId = res.locals.user._id
+      // check to make sure it's not already loaded
+      const lookup = await OwnedList.find({setID,userId})
+      if (lookup.length==0){
+        const ownedlist = new OwnedList({setID,userId})
+        await ownedlist.save()
+      }
+      res.redirect('/ownedlist/show')
+    } catch(e){
+      next(e)
+    }
+  })
+
+app.get('/ownedlist/show',
+  async (req,res,next) => {
+    try{
+      const userId = res.locals.user._id;
+      const setIDs = 
+         (await OwnedList.find({userId}))
+                        .sort(x => x.Name)
+                        .map(x => x.setID)
+      res.locals.sets = await LEGO.find({_id:{$in: setIDs}})
+      res.render('ownedlist')
+    } catch(e){
+      next(e)
+    }
+  }
+)
+
+app.get('/ownedlist/remove/:setID',
+  async (req,res,next) => {
+    try {
+      await OwnedList.remove(
+                {userId:res.locals.user._id,
+                 setID:req.params.setID})
+      res.redirect('/ownedlist/show')
 
     } catch(e){
       next(e)

@@ -1,0 +1,50 @@
+<div class="d-flex flex-wrap text-center overflow-scroll">
+    <% for (set of sets) {%>
+        <div class="p-3 m-3 border border-primary bg-light">    
+            <br>
+            <span>
+                <tr class="mb-2"> 
+                    <td>
+                        <a href="/sets/show/<%=set._id %>">
+                        <strong>Set Number: <%= set['Set_Number'] %></strong>
+                        </a>
+                    </td>
+                    <td>
+                        <strong><%= set['Name'] %></strong>
+                    </td>
+                    <br>
+                    <br><td>
+                        <% if (set['Release_Year'] >1963) { %>
+                            <p> Release Year: <%=set['Release_Year']%> </p>
+                            <%} else { %>
+                            <p> Release Year: N/A </p>
+                        <% } %>
+                        
+                    </td>
+                    <br>
+                    <td>
+                        <% if (set['Price'] >0) { %>
+                            <p> Set Price: <%=set['Price']%> </p>
+                            <%} else { %>
+                            <p> Set Price: N/A </p>
+                        <% } %>
+                    </td>
+                    <br>
+            
+                    <td>
+                        <% if (set['Pieces'] >0) { %>
+                            <p> Amount of Pieces: <%=set['Pieces']%> </p>
+                            <%} else { %>
+                            <p> Amount of Pieces: N/A </p>
+                        <% } %>
+                    </td>
+                    <td>
+                        <img src = "<%= set.Image%>" width = "30%" class="fit-picture"><br>
+                    </td>
+                </tr>
+            </span>
+            <br>
+            <a href="/ownedlist/remove/<%= set._id %>">Remove</a> <br>
+        </div>
+    <% } %>
+</div>
