@@ -4,7 +4,7 @@ The goal of this app is to find lego sets from 1964 - 2021 using the filters pro
 
 # Web App Preview:
 
-# Zoom Link: 
+Zoom Link: 
 
 
 The Main Page which has filters by Name, Theme, and Year. There are also links to view your wish list and owned list on the bottom and as well on the navigation bar for access at any point.
