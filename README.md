@@ -1,10 +1,15 @@
-# cs103a-cpa02 LEGO Sets
+# CS103a-CPA02 LEGO Sets
 
 The goal of this app is to find lego sets from 1964 - 2021 using the filters provided and add them to a wish list or if you already own them to a already owned list. This way if you like collecting lego sets or just like getting them casually you can keep track of what LEGO sets you have or what sets you want to one day buy. The search filters make finding the sets you want much easier. The filters also allow you to simply shop around and determine which set you may want to buy if you can't decide.
+
+# Heroku Link:
+https://young-spire-97521.herokuapp.com/
 
 # Web App Preview:
 
 Zoom Link: 
+
+https://brandeis.zoom.us/rec/play/kMalKqohApZipqEVHKjYOfoedYr5W5joYThj_jH2g7zX0ykDFURSjiF7HPZ2loSGL-m57JFmWamg8FHA.SYt5XGG9NqT3G5pe?autoplay=true&startTime=1651876019000
 
 
 The Main Page which has filters by Name, Theme, and Year. There are also links to view your wish list and owned list on the bottom and as well on the navigation bar for access at any point.
