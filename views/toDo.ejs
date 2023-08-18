@@ -1,29 +1,34 @@
-    <div class="bg-light border border-primary p-3 rounded m-3">
-        <h1 class="display-4 text-center">To Do List</h1>
-        <p class="lead text-center"><%= items.length %>  items for <%= user['username'] %> to do</p>
+<div>
+    <h1 class="display-4 text-center" style="font-family: 'Pacifico', cursive; color: #1486ff; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);">Ideas List</h1>
+    <p class="lead text-center" style="font-family: 'Montserrat', sans-serif; color:aliceblue"><%= items.length %> ideas for <%= user['username'] %></p>
+</div>
+<hr class="bg-primary">
+
+<ol class="text-white">
+    <% for (item of items) { %>
+    <li class="mb-2">
+        <b><%= item.title %>: </b><i><%= item.description %></i>
+        <% if (item.completed) { %>
+            <a href="/todo/completed/false/<%= item._id %>"> Done</a>
+        <% } else { %>
+            <a href="/todo/completed/true/<%= item._id %>"> In Process</a>
+        <% } %>
+        <br>
+        <%= item.createdAt %>
+        <a href="/todo/delete/<%= item._id %>">(delete)</a>
+    </li>
+    <% } %>
+</ol>
+<hr class="bg-primary">
+
+<form method="post" action="/todo/add">
+    <div class="mb-3">
+        <label for="title" class="form-label text-white">Title:</label>
+        <input type="text" class="form-control" id="title" name="title" required>
     </div>
-    <hr>
-    <ol>
-        <% for (item of items){%>
-            <li class="mb-2">          
-                <b><%= item.title%>:</b><i><%= item.description %></i>
-                <% if (item.completed) {%>
-                    <a href="/todo/completed/false/<%= item._id%>">  Done</a>
-                <% } else {%>
-                    <a href="/todo/completed/true/<%= item._id%>"> In Process</a>
-                <% } %>
-                <br>
-                <%= item.createdAt %> 
-                <a href="/todo/delete/<%= item._id%>">(delete)</a>
-            </li>
-        <% }%>
-    </ol>
-    <hr>
-    <form method="post" action="/todo/add">
-        title:<input type="text" name="title"><br>
-        description:<input type="text" name="description"><br>
-        <input type="submit" value="Save Item"><br>
-    </form>
-    
-
-
+    <div class="mb-3">
+        <label for="description" class="form-label text-white">Description:</label>
+        <input type="text" class="form-control" id="description" name="description" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Save Item</button>
+</form>

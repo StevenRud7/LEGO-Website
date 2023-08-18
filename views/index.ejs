@@ -1,40 +1,165 @@
+<head>
+    <!-- Other meta tags and stylesheets -->
+
+    <!-- Include the Google Fonts link -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
 
 
-    <div class="jumbotron">
-        <h1>CPA03: LEGO Set Finder </h1>
-        <p></p>
+<div class="jumbotron text-center">
+    <h1 class="display-3"
+        style="font-family: 'Pacifico', cursive; color: #1486ff; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);">Welcome
+        to the LEGO Set Finder</h1>
+    <p class="lead" style="font-family: 'Montserrat', sans-serif; color:aliceblue">Discover and explore LEGO sets from
+        1964 to 2021</p>
+</div>
+
+
+<div class="container">
+    <div class="alert alert-info">
+        <p class="mb-0">
+            Welcome to our LEGO Set Finder! Search our database to find your favorite LEGO sets and add them to your
+            wishlist or owned list.
+        </p>
     </div>
 
-    <p class="p-3 m-3 border border-danger bg-light">
-        The goal of this website is to search through a data base of lego sets from 1964 - 2021 and find and observe any lego set that is searched for. You can also add any lego set you want to your wish list or if you already own it you can add it your already owned list.
-    </p>
-    
-    <% if (true || loggedIn) {%>  
-        <form method="post" action="/sets/byName">
-            Show Lego Sets by Name: 
-              <input type="text" name="name" 
-                     placeholder="e.g. Batman">
-            <input type="submit">
-        </form>
-        <br>
-        <form method="post" action="/sets/byTheme">
-            Show Lego Sets by Theme: 
-              <input type="text" name="theme" 
-                     placeholder="e.g. Star Wars">
-            <input type="submit">
-        </form>
-        <br>
-        <form method="post" action="/sets/byYear">
-            Show Lego Sets by Year: 
-              <input type="text" name="year" 
-                     placeholder="e.g. 2017">
-            <input type="submit">
-        </form>
-        <br>
-        <a href="/wishlist/show">Show Wishlist</a><br>
-        <br>
-        <a href="/ownedlist/show">Show Owned Sets</a>
-    <% } %>
+    <% if (true || loggedIn) {%>
+        <div class="row">
+            <div class="col-md-6 col-lg-3 mb-3">
+                <form method="post" action="/sets/byName">
+                    <div class="form-group">
+                        <label for="name" class="text-white"><strong>Search by Name:</strong></label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="name" name="name" placeholder="e.g. Batman"
+                                required>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit">Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-md-6 col-lg-3 mb-3">
+                <form method="post" action="/sets/byTheme">
+                    <div class="form-group">
+                        <label for="theme" class="text-white"><strong>Search by Theme:</strong></label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="theme" name="theme" placeholder="e.g. Star Wars"
+                                required>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit">Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-md-6 col-lg-3 mb-3">
+                <form method="post" action="/sets/byYear">
+                    <div class="form-group">
+                        <label for="year" class="text-white"><strong>Search by Year:</strong></label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="year" name="year" placeholder="e.g. 2017"
+                                required>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit">Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-md-6 col-lg-3 mb-3">
+                <form method="post" action="/sets/bySetNum">
+                    <div class="form-group">
+                        <label for="SetNum" class="text-white"><strong>Find a Specific Set with a Set Number:</strong></label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="SetNum" name="SetNum" placeholder="e.g. 75192"
+                                required>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit">Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <h2 class="mb-3" style="font-family: 'Pacifico', cursive; color: #1486ff; text-shadow: 2px 2px 4px rgba(141, 141, 141, 0.3);">Filter By Price</h2>
+            <form class="d-flex justify-content-center" method="post" action="/sets/byPrice">
+                <div class="form-group mx-2">
+                    <label for="minPrice" class="text-white"><strong>Minimum Price:</strong></label>
+                    <input type="number" class="form-control" id="minPrice" name="minPrice"
+                        placeholder="Enter minimum price" required>
+                </div>
+                <div class="form-group mx-2">
+                    <label for="maxPrice" class="text-white"><strong>Maximum Price:</strong></label>
+                    <input type="number" class="form-control" id="maxPrice" name="maxPrice"
+                        placeholder="Enter maximum price" required>
+                </div>
+                <button class="btn btn-primary" type="submit">Search</button>
+            </form>
+        </div>
+        
 
 
 
+        <div class="text-center mt-3">
+            <h2 class="mb-3" style="font-family: 'Pacifico', cursive; color: #1486ff; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);">Utilize All Possible Filters Together</h2>
+            <form class="d-flex justify-content-center align-items-center" method="post" action="/sets/byFilters">
+                <div class="form-group mx-2">
+                    <label for="filter1" class="text-white"><strong>First Filter:</strong></label>
+                    <select class="form-select" id="filter1" name="filter1" required>
+                        <option value="Name">Name</option>
+                        <option value="Tags">Theme</option>
+                        <option value="Release_Year">Year</option>
+                        <option value="Price|Min">Minimum Price</option>
+                        <option value="Price|Max">Maximum Price</option>
+                        <!-- Add more options here if needed -->
+                    </select>
+                    <input type="text" class="form-control mt-2" name="value1" placeholder="Enter value" required>
+                </div>
+                <div class="form-group mx-2">
+                    <label for="filter2" class="text-white"><strong>Second Filter:</strong></label>
+                    <select class="form-select" id="filter2" name="filter2" required>
+                        <option value="None">None</option>
+                        <option value="Name">Name</option>
+                        <option value="Tags">Theme</option>
+                        <option value="Release_Year">Year</option>
+                        <option value="Price|Min">Minimum Price</option>
+                        <option value="Price|Max">Maximum Price</option>
+                        <!-- Add more options here if needed -->
+                    </select>
+                    <input type="text" class="form-control mt-2" name="value2" placeholder="Enter value">
+                </div>
+                <div class="form-group mx-2">
+                    <label for="filter3" class="text-white"><strong>Third Filter:</strong></label>
+                    <select class="form-select" id="filter3" name="filter3" required>
+                        <option value="None">None</option>
+                        <option value="Name">Name</option>
+                        <option value="Tags">Theme</option>
+                        <option value="Release_Year">Year</option>
+                        <option value="Price|Min">Minimum Price</option>
+                        <option value="Price|Max">Maximum Price</option>
+                        <!-- Add more options here if needed -->
+                    </select>
+                    <input type="text" class="form-control mt-2" name="value3" placeholder="Enter value">
+                </div>
+                <button class="btn btn-primary btn-lg" type="submit">Search</button>
+            </form>
+        </div>
+        
+</div>
+
+
+
+<hr class="bg-primary">
+
+<div class="text-center">
+    <a class="btn btn-success btn-lg mx-2" href="/wishlist/show">Show Wishlist</a>
+    <a class="btn btn-primary btn-lg mx-2" href="/ownedlist/show">Show Owned Sets</a>
+</div>
+<% } %>
+    </div>

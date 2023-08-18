@@ -1,50 +1,20 @@
-<div class="d-flex flex-wrap text-center overflow-scroll">
-    <% for (set of sets) {%>
-        <div class="p-3 m-3 border border-primary bg-light">    
-            <br>
-            <span>
-                <tr class="mb-2"> 
-                    <td>
-                        <a href="/sets/show/<%=set._id %>">
-                        <strong>Set Number: <%= set['Set_Number'] %></strong>
-                        </a>
-                    </td>
-                    <td>
-                        <strong><%= set['Name'] %></strong>
-                    </td>
-                    <br>
-                    <br><td>
-                        <% if (set['Release_Year'] >1963) { %>
-                            <p> Release Year: <%=set['Release_Year']%> </p>
-                            <%} else { %>
-                            <p> Release Year: N/A </p>
-                        <% } %>
-                        
-                    </td>
-                    <br>
-                    <td>
-                        <% if (set['Price'] >0) { %>
-                            <p> Set Price: <%=set['Price']%> </p>
-                            <%} else { %>
-                            <p> Set Price: N/A </p>
-                        <% } %>
-                    </td>
-                    <br>
-            
-                    <td>
-                        <% if (set['Pieces'] >0) { %>
-                            <p> Amount of Pieces: <%=set['Pieces']%> </p>
-                            <%} else { %>
-                            <p> Amount of Pieces: N/A </p>
-                        <% } %>
-                    </td>
-                    <td>
-                        <img src = "<%= set.Image%>" width = "30%" class="fit-picture"><br>
-                    </td>
-                </tr>
-            </span>
-            <br>
-            <a href="/ownedlist/remove/<%= set._id %>">Remove</a> <br>
+<div class="container mt-5">
+    <h1 class="display-4 text-center" style="font-family: 'Pacifico', cursive; color: #1486ff; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);">Your Owned LEGO Sets </h1>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+        <% for (set of sets) { %>
+        <div class="col">
+            <div class="card h-100 border-primary">
+                <img src="<%= set.Image %>" class="card-img-top img-fluid" style="height: 200px;" alt="<%= set.Name %>">
+                <div class="card-body">
+                    <h5 class="card-title"><a href="/sets/show/<%=set._id %>" class="text-primary"><%= set['Name'] %></a></h5>
+                    <p class="card-text"><strong>Set Number:</strong> <%= set['Set_Number'] %></p>
+                    <p class="card-text"><strong>Release Year:</strong> <% if (set['Release_Year'] > 1963) { %><%= set['Release_Year'] %><% } else { %>N/A<% } %></p>
+                    <p class="card-text"><strong>Set Price:</strong> <% if (set['Price'] > 0) { %><%= set['Price'] %><% } else { %>N/A<% } %></p>
+                    <p class="card-text"><strong>Amount of Pieces:</strong> <% if (set['Pieces'] > 0) { %><%= set['Pieces'] %><% } else { %>N/A<% } %></p>
+                    <a href="/wishlist/remove/<%= set._id %>" class="btn btn-danger">Remove</a>
+                </div>
+            </div>
         </div>
-    <% } %>
+        <% } %>
+    </div>
 </div>

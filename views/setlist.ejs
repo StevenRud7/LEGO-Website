@@ -1,58 +1,57 @@
-<h1>The sets are</h1>
-All sets matching the given filter
-<hr>
-<table class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>Set Number</th>
-            <th>Name</th>
-            <th>Release Year</th>
-            <th>Price</th>
-            <th>Pieces</th>
-            <th>Image</th>
-        </tr>
-    </thead>
-    <tbody></tbody>
-    <% for (set of sets) { %>
-      <tr class="mb-2"> 
-        <td>
-            <a href="/sets/show/<%=set._id %>">
-            <strong><%= set['Set_Number'] %></strong>
-            </a>
-        </td>
-        <td>
-            <strong><%= set['Name'] %></strong>
-        </td>
-
-        <td>
-            <% if (set['Release_Year'] >1963) { %>
-                <p> <%=set['Release_Year']%> </p>
-                <%} else { %>
-                <p> N/A </p>
-            <% } %>
-            
-        </td>
-
-        <td>
-            <% if (set['Price'] >0) { %>
-                <p> <%=set['Price']%> </p>
-                <%} else { %>
-                <p> N/A </p>
-            <% } %>
-        </td>
-        
-
-        <td>
-            <% if (set['Pieces'] >0) { %>
-                <p> <%=set['Pieces']%> </p>
-                <%} else { %>
-                <p> N/A </p>
-            <% } %>
-        </td>
-        <td>
-            <img src = "<%= set.Image%>" width = "30%" class="fit-picture">
-        </td>
-    </tr>
-    <% } %>
-    </tbody>
-</table>
+<div class="container mt-5">
+    <h1 class="display-4 text-center" style="font-family: 'Pacifico', cursive; color: #1486ff; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);">Explore the Matching Sets</h1>
+    <!-- <p class="lead text-center" style="font-family: 'Montserrat', sans-serif; color:aliceblue">Explore all sets matching the given filter</p> -->
+    <hr class="my-4">
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">Set Number</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Release Year</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Pieces</th>
+                    <th scope="col">Image</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for (set of sets) { %>
+                <tr>
+                    <td>
+                        <a href="/sets/show/<%=set._id %>">
+                            <strong><%= set['Set_Number'] %></strong>
+                        </a>
+                    </td>
+                    <td>
+                        <strong><%= set['Name'] %></strong>
+                    </td>
+                    <td>
+                        <% if (set['Release_Year'] > 1963) { %>
+                        <p><%= set['Release_Year'] %></p>
+                        <% } else { %>
+                        <p>N/A</p>
+                        <% } %>
+                    </td>
+                    <td>
+                        <% if (set['Price'] > 0) { %>
+                        <p><%= set['Price'] %></p>
+                        <% } else { %>
+                        <p>N/A</p>
+                        <% } %>
+                    </td>
+                    <td>
+                        <% if (set['Pieces'] > 0) { %>
+                        <p><%= set['Pieces'] %></p>
+                        <% } else { %>
+                        <p>N/A</p>
+                        <% } %>
+                    </td>
+                    <td>
+                        <img src="<%= set.Image %>" width="50%" class="fit-picture">
+                    </td>
+                </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>

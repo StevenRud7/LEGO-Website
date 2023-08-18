@@ -1,76 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <!-- Required Bootstrap meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
     <title>CS103a Lego Sets</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <!-- Custom CSS -->
+    <link rel='stylesheet' href='/stylesheets/style.css'>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: rgba(0, 0, 0, 0.5) url('/images/background5.jpg') no-repeat center bottom fixed;
+            background-size: cover;
+            font-family: 'Montserrat', sans-serif;
+            color: #333;
+        }
 
-    <!-- custom CSS -->
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <div class="container-fluid" style="background-color: #6d8bff40;">
+        .navbar {
+            background-color: #17a2b8;
+            border-bottom: 2px solid #333;
+        }
 
+        .navbar-brand {
+            font-family: 'Pacifico', cursive;
+            font-size: 24px;
+            color: #fff;
+        }
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-info">
-        <a class="navbar-brand" href="/">CS103a Lego Data
-          <img src="/images/logo.png" style="width: 15%; margin-bottom: 1%;"></img>
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-      
-            <li class="nav-item ">
-              <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-            </li>
-      
-            <li class="nav-item">
-              <a class="nav-link" href="/about">About</a>
-            </li>
+        .navbar-toggler-icon {
+            background-color: #fff;
+        }
 
-            
-            <% if (!loggedIn) {%>
-            <li class="nav-item">
-              <a class="nav-link" href="/login">Login/Signup</a>
-            </li>
-            <% } else { %>
+        .navbar-nav .nav-link {
+            color: #fff;
+        }
 
-              <li class="nav-item">
-                <a class="nav-link" href="/todo">To Do list</a>
-              </li>
+        .navbar-nav .nav-link:hover {
+            color: #ffc107;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid p-0">
 
-              <li class="nav-item">
-                <a class="nav-link" href="/wishlist/show">Wish list</a>
-              </li>
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="/">
+                <img src="/images/logo.png" alt="Logo" style="width: 15%; margin-bottom: 1%; margin-left: 2%">
+                LEGO Explorer
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-              <li class="nav-item">
-                <a class="nav-link" href="/ownedlist/show">Sets Owned</a>
-              </li>
-            
-              
-              <li class="nav-item">
-                <a class="nav-link" href="/logout">Logout <%= username %></a>
-              </li>
-            <% } %>
-      
-          </ul>
-      
-      
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                    <% if (!loggedIn) { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login/Signup</a>
+                    </li>
+                    <% } else { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/todo">Idea List</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/wishlist/show">Wish List</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/ownedlist/show">Sets Owned</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout <%= username %></a>
+                    </li>
+                    <% } %>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="container mt-4">
+            <%- body %>
         </div>
-      </nav>
-      
-
-	<%- body %>
 
     </div>
-    <!--  Javascript for Bootstrap -->
+    <!-- Javascript for Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-  </body>
+</body>
 </html>
