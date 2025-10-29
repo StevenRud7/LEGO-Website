@@ -4,6 +4,8 @@ The goal of this app is to find lego sets from 1964 - 2021 using the filters pro
 
 Website link (may take a minute to boot up): https://legowebsite.onrender.com/
 
+#### Data found here: public/data/legodataset.json
+
 # Web App Preview:
 
 The Main Page which has filters by Name, Theme, and Year. There are also links to view your wish list and owned list on the bottom and as well on the navigation bar for access at any point.
