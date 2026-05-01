@@ -40,7 +40,8 @@ const mongoose = require( 'mongoose' );
 // const mongodb_URI = 'mongodb://localhost:27017/cs103a_todo'
 const mongodb_URI = process.env.MONGODB_URI || 'mongodb+srv://CPA02:zW5UGuUKhIumIfm0@cluster1.lyciq.mongodb.net/StevenData?retryWrites=true&w=majority'
 
-mongoose.connect( mongodb_URI, { useNewUrlParser: true, useUnifiedTopology: true } );
+if (!mongodb_URI) { console.error("ERROR: No MongoDB URI found."); process.exit(1); }
+mongoose.connect( mongodb_URI );
 // Mongoose 6+ doesn't need these deprecated flags
 
 const db = mongoose.connection;
@@ -80,7 +81,7 @@ app.use(express.static(path.join(__dirname, "public")));
 // Here we enable session handling using cookies
 app.use(
   session({
-    secret: "zzbbyanana789sdfa8f9ds8f90ds87f8d9s789fds",
+    secret: "zzbbyanana789sdfa8f9ds8f90ds87f8d9s789fds", 
     resave: false,
     saveUninitialized: false
   })
