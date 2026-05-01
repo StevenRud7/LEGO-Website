@@ -40,10 +40,8 @@ const mongoose = require( 'mongoose' );
 // const mongodb_URI = 'mongodb://localhost:27017/cs103a_todo'
 const mongodb_URI = 'mongodb+srv://CPA02:zW5UGuUKhIumIfm0@cluster1.lyciq.mongodb.net/StevenData?retryWrites=true&w=majority'
 
-mongoose.connect( mongodb_URI, { useNewUrlParser: true, useUnifiedTopology: true } );
-// fix deprecation warnings
-mongoose.set('useFindAndModify', false); 
-mongoose.set('useCreateIndex', true);
+mongoose.connect( mongodb_URI );
+// Mongoose 6+ doesn't need these deprecated flags
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -95,7 +93,6 @@ app.use(
 
 // here is the code which handles all /login /signin /logout routes
 const auth = require('./routes/auth');
-const { deflateSync } = require("zlib");
 app.use(auth)
 
 // middleware to test is the user is logged in, and if not, send them to the login page
@@ -346,7 +343,6 @@ app.get('/wishlist/show',
       const userId = res.locals.user._id;
       const setIDs = 
          (await WishList.find({userId}))
-                        .sort(x => x.Name)
                         .map(x => x.setID)
       res.locals.sets = await LEGO.find({_id:{$in: setIDs}})
       res.render('wishlist')
@@ -359,7 +355,7 @@ app.get('/wishlist/show',
 app.get('/wishlist/remove/:setID',
   async (req,res,next) => {
     try {
-      await WishList.remove(
+      await WishList.deleteOne(
                 {userId:res.locals.user._id,
                  setID:req.params.setID})
       res.redirect('/wishlist/show')
@@ -393,7 +389,6 @@ app.get('/ownedlist/show',
       const userId = res.locals.user._id;
       const setIDs = 
          (await OwnedList.find({userId}))
-                        .sort(x => x.Name)
                         .map(x => x.setID)
       res.locals.sets = await LEGO.find({_id:{$in: setIDs}})
       res.render('ownedlist')
@@ -406,7 +401,7 @@ app.get('/ownedlist/show',
 app.get('/ownedlist/remove/:setID',
   async (req,res,next) => {
     try {
-      await OwnedList.remove(
+      await OwnedList.deleteOne(
                 {userId:res.locals.user._id,
                  setID:req.params.setID})
       res.redirect('/ownedlist/show')

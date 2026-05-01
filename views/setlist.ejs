@@ -1,57 +1,69 @@
-<div class="container mt-5">
-    <h1 class="display-4 text-center" style="font-family: 'Pacifico', cursive; color: #1486ff; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);">Explore the Matching Sets</h1>
-    <!-- <p class="lead text-center" style="font-family: 'Montserrat', sans-serif; color:aliceblue">Explore all sets matching the given filter</p> -->
-    <hr class="my-4">
-    <div class="table-responsive">
-        <table class="table table-bordered table-striped table-dark">
-            <thead>
-                <tr>
-                    <th scope="col">Set Number</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Release Year</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Pieces</th>
-                    <th scope="col">Image</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% for (set of sets) { %>
-                <tr>
-                    <td>
-                        <a href="/sets/show/<%=set._id %>">
-                            <strong><%= set['Set_Number'] %></strong>
-                        </a>
-                    </td>
-                    <td>
-                        <strong><%= set['Name'] %></strong>
-                    </td>
-                    <td>
-                        <% if (set['Release_Year'] > 1963) { %>
-                        <p><%= set['Release_Year'] %></p>
-                        <% } else { %>
-                        <p>N/A</p>
-                        <% } %>
-                    </td>
-                    <td>
-                        <% if (set['Price'] > 0) { %>
-                        <p><%= set['Price'] %></p>
-                        <% } else { %>
-                        <p>N/A</p>
-                        <% } %>
-                    </td>
-                    <td>
-                        <% if (set['Pieces'] > 0) { %>
-                        <p><%= set['Pieces'] %></p>
-                        <% } else { %>
-                        <p>N/A</p>
-                        <% } %>
-                    </td>
-                    <td>
-                        <img src="<%= set.Image %>" width="50%" class="fit-picture">
-                    </td>
-                </tr>
-                <% } %>
-            </tbody>
-        </table>
+<div class="list-page-header">
+  <h1>🔍 Search Results</h1>
+  <p>Showing sets matching your filters</p>
+</div>
+
+<% if (sets.length === 0) { %>
+<div class="empty-state">
+  <div class="empty-icon">🔎</div>
+  <h3>No Sets Found</h3>
+  <p>Try adjusting your search filters.</p>
+  <a href="/" class="btn-lego btn-lego-primary btn-lg-action" style="margin-top:1rem;">Back to Search</a>
+</div>
+<% } else { %>
+
+<div class="result-count"><i class="bi bi-grid-fill"></i><%= sets.length %> set<%= sets.length !== 1 ? 's' : '' %> found</div>
+
+<div class="sets-grid">
+  <% for (let set of sets) { %>
+  <div class="lego-card">
+    <div class="card-img-wrapper">
+      <img class="card-img" src="<%= set.Image %>" alt="<%= set.Name %>" loading="lazy"
+           onerror="this.src='https://via.placeholder.com/200x150?text=No+Image'">
+      <% if (set.Release_Year > 1963) { %>
+      <span class="card-badge"><%= set.Release_Year %></span>
+      <% } %>
     </div>
+    <div class="card-body">
+      <div class="card-title">
+        <a href="/sets/show/<%= set._id %>"><%= set.Name %></a>
+      </div>
+      <div class="card-meta">
+        <div class="meta-item">
+          <span class="meta-label">#</span>
+          <span><%= set.Set_Number || 'N/A' %></span>
+        </div>
+        <div class="meta-item">
+          <i class="bi bi-puzzle-fill" style="color:#E3000B;font-size:0.75rem;"></i>
+          <span><%= set.Pieces > 0 ? set.Pieces.toLocaleString() + ' pcs' : 'N/A' %></span>
+        </div>
+        <div class="meta-item">
+          <i class="bi bi-tag-fill" style="color:#006DB7;font-size:0.75rem;"></i>
+          <span><%= set.Price > 0 ? '$' + set.Price : 'N/A' %></span>
+        </div>
+      </div>
+      <div class="card-actions">
+        <a href="/sets/show/<%= set._id %>" class="btn-lego btn-lego-primary" style="font-size:0.78rem;padding:0.38rem 0.9rem;">
+          <i class="bi bi-eye-fill"></i> View
+        </a>
+        <% if (loggedIn) { %>
+        <a href="/addSet/<%= set._id %>" class="btn-lego btn-lego-yellow" style="font-size:0.78rem;padding:0.38rem 0.9rem;color:#1A1A1A;">
+          <i class="bi bi-heart"></i> Wish
+        </a>
+        <a href="/addOwnedSet/<%= set._id %>" class="btn-lego btn-lego-blue" style="font-size:0.78rem;padding:0.38rem 0.9rem;">
+          <i class="bi bi-trophy"></i> Own
+        </a>
+        <% } %>
+      </div>
+    </div>
+  </div>
+  <% } %>
+</div>
+
+<% } %>
+
+<div class="cta-row" style="margin-top:2rem;">
+  <a href="/" class="btn-lego btn-lego-primary btn-lg-action">
+    <i class="bi bi-arrow-left me-1"></i> New Search
+  </a>
 </div>

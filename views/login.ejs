@@ -1,68 +1,67 @@
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-sm-5">
-            <div class="card p-4 shadow">
-                <h2 class="text-center mb-4">Login</h2>
-                <form method="post" action="/login">
-                    <div class="mb-3">
-                        <label for="loginUsername" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="loginUsername" autocomplete="username" name="username" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="loginPassphrase" class="form-label">Passphrase</label>
-                        <input type="password" class="form-control" id="loginPassphrase" autocomplete="current-password" name="passphrase" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block">Login</button>
-                    <% if (loginFailed) { %>
-                        <p class="text-danger mt-2">Wrong username and/or password</p>
-                    <% } %>
-                </form>
-            </div>
-        </div>
+<div class="auth-wrapper">
 
+  <!-- LOGIN -->
+  <div class="auth-card">
+    <h2><i class="bi bi-person-fill-lock me-2"></i>Login</h2>
+    <form method="post" action="/login">
+      <div class="mb-3">
+        <label class="form-label" for="loginUsername">Username</label>
+        <input type="text" class="form-control" id="loginUsername" name="username" autocomplete="username" placeholder="Your username" required>
+      </div>
+      <div class="mb-4">
+        <label class="form-label" for="loginPassphrase">Password</label>
+        <input type="password" class="form-control" id="loginPassphrase" name="passphrase" autocomplete="current-password" placeholder="Your password" required>
+      </div>
+      <button type="submit" class="btn-lego btn-lego-primary w-100" style="padding:0.7rem;font-size:1rem;justify-content:center;">
+        <i class="bi bi-box-arrow-in-right me-1"></i> Login
+      </button>
+      <% if (loginFailed) { %>
+      <div class="mt-3 p-2 rounded" style="background:rgba(227,0,11,0.1);border-left:3px solid #E3000B;color:#c20009;font-weight:700;font-size:0.88rem;">
+        <i class="bi bi-exclamation-triangle-fill me-1"></i> Wrong username or password.
+      </div>
+      <% } %>
+    </form>
+  </div>
 
+  <!-- SIGNUP -->
+  <div class="auth-card">
+    <h2><i class="bi bi-person-plus-fill me-2"></i>Sign Up</h2>
+    <form method="post" action="/signup">
+      <div class="mb-3">
+        <label class="form-label" for="signupUsername">Username</label>
+        <input type="text" class="form-control" id="signupUsername" name="username" autocomplete="username" placeholder="Choose a username" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="signupPassphrase">Password</label>
+        <input type="password" class="form-control" id="signupPassphrase" name="passphrase" autocomplete="new-password" placeholder="Choose a password" required>
+      </div>
+      <div class="mb-4">
+        <label class="form-label" for="confirmPassphrase">Confirm Password</label>
+        <input type="password" class="form-control" id="confirmPassphrase" name="passphrase2" autocomplete="new-password" placeholder="Repeat your password" required>
+      </div>
+      <button type="submit" class="btn-lego btn-lego-success w-100" style="padding:0.7rem;font-size:1rem;justify-content:center;border-radius:8px;">
+        <i class="bi bi-person-check-fill me-1"></i> Create Account
+      </button>
+      <% if (signupFailed) { %>
+      <div class="mt-3 p-2 rounded" style="background:rgba(227,0,11,0.1);border-left:3px solid #E3000B;color:#c20009;font-weight:700;font-size:0.88rem;">
+        <i class="bi bi-exclamation-triangle-fill me-1"></i> Username already exists.
+      </div>
+      <% } %>
+    </form>
+  </div>
 
-        <div class="col-sm-5">
-            <div class="card p-4 shadow">
-                <h2 class="text-center mb-4">Signup</h2>
-                <form method="post" action="/signup">
-                    <div class="mb-3">
-                        <label for="signupUsername" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="signupUsername" autocomplete="username" name="username" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="signupPassphrase" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="signupPassphrase" autocomplete="new-password" name="passphrase" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="confirmPassphrase" class="form-label">Confirm Password</label>
-                        <input type="password" class="form-control" id="confirmPassphrase" name="passphrase2" required>
-                    </div>
-                    <button type="submit" class="btn btn-success btn-block">Signup</button>
-                    <% if (signupFailed) { %>
-                        <p class="text-danger mt-2">Username already exists</p>
-                    <% } %>
-                </form>
-            </div>
-        </div>
-    </div>
 </div>
 
-<!-- Add this script at the end of the login.ejs file -->
 <script>
-    // Clear login and signup form inputs if login/signup failed
-    const urlParams = new URLSearchParams(window.location.search);
-    const loginFailed = urlParams.get('loginFailed');
-    const signupFailed = urlParams.get('signupFailed');
-    
-    if (loginFailed || signupFailed) {
-        document.getElementById('loginUsername').value = '';
-        document.getElementById('loginPassphrase').value = '';
-        document.getElementById('signupUsername').value = '';
-        document.getElementById('signupPassphrase').value = '';
-        document.getElementById('confirmPassphrase').value = '';
-        
-        const errorMessage = loginFailed ? 'Wrong username and/or password' : 'Username already exists';
-        document.getElementById('errorMessage').textContent = errorMessage;
-    }
+  // Clear fields on failed login/signup so browser doesn't repopulate them
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('loginFailed')) {
+    document.getElementById('loginUsername').value = '';
+    document.getElementById('loginPassphrase').value = '';
+  }
+  if (params.get('signupFailed')) {
+    document.getElementById('signupUsername').value = '';
+    document.getElementById('signupPassphrase').value = '';
+    document.getElementById('confirmPassphrase').value = '';
+  }
 </script>

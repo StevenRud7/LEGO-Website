@@ -1,34 +1,61 @@
-<div>
-    <h1 class="display-4 text-center" style="font-family: 'Pacifico', cursive; color: #1486ff; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);">Ideas List</h1>
-    <p class="lead text-center" style="font-family: 'Montserrat', sans-serif; color:aliceblue"><%= items.length %> ideas for <%= user['username'] %></p>
+<div class="list-page-header">
+  <h1>💡 Ideas List</h1>
+  <p><%= items.length %> idea<%= items.length !== 1 ? 's' : '' %> for <strong><%= user.username %></strong></p>
 </div>
-<hr class="bg-primary">
 
-<ol class="text-white">
-    <% for (item of items) { %>
-    <li class="mb-2">
-        <b><%= item.title %>: </b><i><%= item.description %></i>
+<div class="ideas-wrapper">
+
+  <% if (items.length === 0) { %>
+  <div class="empty-state">
+    <div class="empty-icon">💭</div>
+    <h3>No Ideas Yet</h3>
+    <p>Add your first idea below!</p>
+  </div>
+  <% } else { %>
+    <% items.forEach(function(item, i) { %>
+    <div class="idea-item <%= item.completed ? 'completed' : '' %>">
+      <div class="idea-num"><%= i + 1 %></div>
+      <div class="idea-content">
+        <div class="idea-title"><%= item.title %></div>
+        <div class="idea-desc"><%= item.description %></div>
+        <div class="idea-date"><i class="bi bi-clock me-1"></i><%= new Date(item.createdAt).toLocaleDateString('en-US', {year:'numeric',month:'short',day:'numeric'}) %></div>
+      </div>
+      <div class="idea-actions">
         <% if (item.completed) { %>
-            <a href="/todo/completed/false/<%= item._id %>"> Done</a>
+        <a href="/todo/completed/false/<%= item._id %>" class="btn-lego btn-lego-success" style="font-size:0.75rem;padding:0.35rem 0.8rem;">
+          <i class="bi bi-check-circle-fill"></i> Done
+        </a>
         <% } else { %>
-            <a href="/todo/completed/true/<%= item._id %>"> In Process</a>
+        <a href="/todo/completed/true/<%= item._id %>" class="btn-lego btn-lego-yellow" style="font-size:0.75rem;padding:0.35rem 0.8rem;color:#1A1A1A;">
+          <i class="bi bi-arrow-clockwise"></i> In Progress
+        </a>
         <% } %>
-        <br>
-        <%= item.createdAt %>
-        <a href="/todo/delete/<%= item._id %>">(delete)</a>
-    </li>
-    <% } %>
-</ol>
-<hr class="bg-primary">
+        <a href="/todo/delete/<%= item._id %>" class="btn-lego btn-lego-danger" style="font-size:0.75rem;padding:0.35rem 0.8rem;">
+          <i class="bi bi-trash-fill"></i>
+        </a>
+      </div>
+    </div>
+    <% }); %>
+  <% } %>
 
-<form method="post" action="/todo/add">
-    <div class="mb-3">
-        <label for="title" class="form-label text-white">Title:</label>
-        <input type="text" class="form-control" id="title" name="title" required>
-    </div>
-    <div class="mb-3">
-        <label for="description" class="form-label text-white">Description:</label>
-        <input type="text" class="form-control" id="description" name="description" required>
-    </div>
-    <button type="submit" class="btn btn-primary">Save Item</button>
-</form>
+  <hr class="lego-divider">
+
+  <!-- ADD FORM -->
+  <div class="glass-panel" style="margin-top:1.5rem;">
+    <div class="section-heading">Add New Idea</div>
+    <form method="post" action="/todo/add">
+      <div class="mb-3">
+        <label class="form-label" for="idea-title">Title</label>
+        <input type="text" class="form-control" id="idea-title" name="title" placeholder="Idea title..." required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="idea-desc">Description</label>
+        <input type="text" class="form-control" id="idea-desc" name="description" placeholder="Describe the idea..." required>
+      </div>
+      <button type="submit" class="btn-lego btn-lego-yellow" style="color:#1A1A1A;padding:0.6rem 1.6rem;">
+        <i class="bi bi-plus-circle-fill me-1"></i> Save Idea
+      </button>
+    </form>
+  </div>
+
+</div>

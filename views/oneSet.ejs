@@ -1,15 +1,43 @@
-<div class="bg-light m-5 p-2 border border-danger border-2">
-    <div class="">
-        <div><a href="/addSet/<%= set['_id'] %>">(Add to Wishlist)</a></div><br>
-        <div><a href="/addOwnedSet/<%= set['_id'] %>">(I Own This Set)</a></div><br>
-        <span>
-            <strong>Set Name: <%= set.Name %> </strong>
-            <br>
-            <br><strong>Amount of Pieces: <%= set.Pieces %></strong>
-            <img src = "<%= set.Image%>" width = "100%" class="fit-picture">
-        </span>
-        <br>
-        
+<div class="single-set-wrapper">
+  <div class="single-set-img">
+    <img src="<%= set.Image %>" alt="<%= set.Name %>"
+         onerror="this.src='https://via.placeholder.com/400x300?text=No+Image'">
+  </div>
+  <div class="single-set-header">
+    <h1><%= set.Name %></h1>
+    <% if (set.Tags) { %><div style="font-size:0.9rem;opacity:0.85;margin-top:4px;"><i class="bi bi-tag-fill me-1"></i><%= set.Tags %></div><% } %>
+  </div>
+  <div class="single-set-body">
+
+    <div class="set-stats">
+      <div class="stat-box">
+        <div class="stat-value"><%= set.Set_Number || '—' %></div>
+        <div class="stat-label">Set Number</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-value"><%= set.Pieces > 0 ? set.Pieces.toLocaleString() : '—' %></div>
+        <div class="stat-label">Pieces</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-value"><%= set.Release_Year > 1963 ? set.Release_Year : '—' %></div>
+        <div class="stat-label">Year</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-value"><%= set.Price > 0 ? '$' + set.Price : '—' %></div>
+        <div class="stat-label">Price</div>
+      </div>
     </div>
 
+    <div class="single-set-actions">
+      <a href="/addSet/<%= set._id %>" class="btn-lego btn-lego-yellow btn-lg-action">
+        <i class="bi bi-heart-fill"></i> Add to Wishlist
+      </a>
+      <a href="/addOwnedSet/<%= set._id %>" class="btn-lego btn-lego-blue btn-lg-action">
+        <i class="bi bi-trophy-fill"></i> I Own This Set
+      </a>
+      <a href="javascript:history.back()" class="btn-lego btn-lego-primary btn-lg-action">
+        <i class="bi bi-arrow-left"></i> Back
+      </a>
+    </div>
+  </div>
 </div>

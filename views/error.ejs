@@ -1,3 +1,15 @@
-<h1><%= message %></h1>
-<h2><%= error.status %></h2>
-<pre><%= error.stack %></pre>
+<div style="text-align:center;padding:4rem 1rem;">
+  <div style="font-size:5rem;margin-bottom:1rem;">🚧</div>
+  <h1 style="font-family:'Bangers',cursive;font-size:3rem;letter-spacing:3px;color:#FFD700;text-shadow:3px 3px 0 #E3000B;">
+    Oops! Something went wrong.
+  </h1>
+  <p style="color:rgba(255,255,255,0.75);font-size:1.1rem;font-weight:600;margin-bottom:0.5rem;">
+    <%= message %>
+  </p>
+  <% if (error && error.status) { %>
+  <p style="color:rgba(255,255,255,0.4);font-size:0.9rem;">Status: <%= error.status %></p>
+  <% } %>
+  <a href="/" class="btn-lego btn-lego-primary btn-lg-action" style="margin-top:1.5rem;">
+    <i class="bi bi-house-fill me-1"></i> Back to Home
+  </a>
+</div>
