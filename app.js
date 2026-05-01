@@ -38,9 +38,9 @@ const legosets = require('./public/data/legodataset.json')
 
 const mongoose = require( 'mongoose' );
 // const mongodb_URI = 'mongodb://localhost:27017/cs103a_todo'
-const mongodb_URI = 'mongodb+srv://CPA02:zW5UGuUKhIumIfm0@cluster1.lyciq.mongodb.net/StevenData?retryWrites=true&w=majority'
+const mongodb_URI = process.env.MONGODB_URI || 'mongodb+srv://CPA02:zW5UGuUKhIumIfm0@cluster1.lyciq.mongodb.net/StevenData?retryWrites=true&w=majority'
 
-mongoose.connect( mongodb_URI );
+mongoose.connect( mongodb_URI, { useNewUrlParser: true, useUnifiedTopology: true } );
 // Mongoose 6+ doesn't need these deprecated flags
 
 const db = mongoose.connection;
@@ -80,7 +80,7 @@ app.use(express.static(path.join(__dirname, "public")));
 // Here we enable session handling using cookies
 app.use(
   session({
-    secret: "zzbbyanana789sdfa8f9ds8f90ds87f8d9s789fds", // this ought to be hidden in process.env.SECRET
+    secret: "zzbbyanana789sdfa8f9ds8f90ds87f8d9s789fds",
     resave: false,
     saveUninitialized: false
   })
